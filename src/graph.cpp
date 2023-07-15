@@ -1,0 +1,46 @@
+#include "graph.hpp"
+
+Graph::Graph(int arg_n, int arg_map_size) : n{arg_n}, map_size{arg_map_size} {
+	c = std::vector<std::vector<float>>(n, std::vector<float>(n));
+	generateGraph();
+}
+
+int Graph::getN(){
+	return n;
+}
+
+std::vector<std::vector<float>> Graph::getC(){
+	return c;
+}
+
+void Graph::generateGraph() {
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<float> dist(0, map_size);
+
+	nodes = std::vector<Node>(n);
+
+	for(int i = 0; i < n; i++){
+		int x = dist(mt);
+		int y = dist(mt);
+		nodes.at(i) = Node(x, y, i);
+	}
+
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j <= i; j++){
+			if(i == j) c.at(i).at(j) = FLT_MAX;
+			else {
+				float d = distance(nodes.at(i), nodes.at(j));
+				c.at(i).at(j) = d;
+				c.at(j).at(i) = d;
+			}
+		}
+	}
+}
+
+std::ofstream& operator<<(std::ofstream& out, const Graph& g){
+	for(const Node& n: g.nodes){
+		out << n.x << ',' << n.y << std::endl;
+	}
+	return out;
+}
