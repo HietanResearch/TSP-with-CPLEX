@@ -1,7 +1,12 @@
+args <- commandArgs(trailingOnly=TRUE)
+nodes_filename <- args[1]
+routes_filename <- args[2]
+output_filename <- args[3]
+
 library(igraph)
 
-nodes <- as.matrix(read.csv('../out/nodes.csv', header=F))
-routes <- read.csv('../out/routes.csv', header=F)
+nodes <- as.matrix(read.csv(nodes_filename, header=F))
+routes <- read.csv(routes_filename, header=F)
 
 edges_arg <- c()
 
@@ -17,7 +22,7 @@ g <- graph(edges=edges_arg)
 
 shape_arg <- c("square", rep("circle", times=(vcount(g))))
 
-print(nodes)
+pdf(output_filename)
 
 plot(g,
 	 layout=nodes,

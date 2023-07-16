@@ -1,3 +1,16 @@
+# Please set the variable according to your environment like examples below.
+# MY_CPLEX_ROOT_DIR := /opt/ibm/ILOG/CPLEX_Studio****
+# MY_CPLEX_ROOT_DIR := /Applications/CPLEX_Studio****
+
+# Set Input File
+PARAMETER := parameter.cfg
+
+# Set Output File
+TIME = $(shell date "+%Y%m%d%H%M%S")
+NODES_CSV = $(OUTDIR)/nodes_$(TIME).csv
+ROUTES_CSV = $(OUTDIR)/routes_$(TIME).csv
+PDF = $(OUTDIR)/graph_$(TIME).pdf
+
 # Detect Kernel Name
 KERNEL := $(shell uname -s)
 
@@ -31,12 +44,12 @@ else
 	$(error ERROR: OS or CPU architecture does not supported.)
 endif
 
-# Please remove comment out and set the variable according to your environment like examples below.
-# CPLEX_ROOT_DIR := /opt/ibm/ILOG/CPLEX_Studio****
-# CPLEX_ROOT_DIR := /Applications/CPLEX_Studio****
-
 # Set Directories
 LIBFORMAT := static_pic
+
+ifdef MY_CPLEX_ROOT_DIR
+	CPLEX_ROOT_DIR := $(MY_CPLEX_ROOT_DIR)
+endif
 
 CPLEXDIR		:= $(CPLEX_ROOT_DIR)/cplex
 CONCERTDIR	:= $(CPLEX_ROOT_DIR)/concert
@@ -59,6 +72,7 @@ TARGET := $(BINDIR)/main.out
 
 SRCDIR := src
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
+R_SRC := $(SRCDIR)/makeGraph.R
 
 OBJDIR := obj
 OBJS := $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.cpp=.o)))
@@ -74,13 +88,20 @@ rebuild: clean all
 
 execute: all run
 
+execute_all: execute graph
+
 reexecute: clean execute
 
 run:
-	./$(TARGET)
+	./$(TARGET) $(PARAMETER) $(NODES_CSV) $(ROUTES_CSV)
+
+run_all: run graph
 
 clean:
 	rm -rf $(MAKE_DIRS)
+
+graph:
+	Rscript $(R_SRC) $(NODES_CSV) $(ROUTES_CSV) $(PDF)
 
 $(TARGET): $(OBJS)
 	$(CCC) $(CCFLAGS) $(CCLNDIRS) -o $@ $^ $(CCLNFLAGS)
