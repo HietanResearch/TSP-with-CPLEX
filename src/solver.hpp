@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graph.hpp"
+#include "model.hpp"
 #include <fstream>
 #include <ilcplex/ilocplex.h>
 #include <iostream>
@@ -10,9 +10,9 @@ ILOSTLBEGIN
 
 class Solver {
 	public:
-		Graph graph;
+		Model mod;
 		std::vector<std::vector<int>> res;
-		Solver(Graph arg_Graph);
+		Solver(Model arg_Model);
 		bool solve();
 		void printResult(std::ofstream& file);
 };

@@ -1,15 +1,13 @@
 #include "solver.hpp"
 
-#define OK(n) std::cout << "OK" << n << std::endl
-
-Solver::Solver(Graph arg_graph) : graph{arg_graph} {}
+Solver::Solver(Model arg_mod) : mod{arg_mod} {}
 
 bool Solver::solve(){
-	int n = graph.getN();
-	std::vector<std::vector<float>> c = graph.getC();
-	int m = graph.m;
-	int L = graph.L;
-	int K = graph.K;
+	int n = mod.getN();
+	std::vector<std::vector<float>> c = mod.getC();
+	int m = mod.m;
+	int L = mod.L;
+	int K = mod.K;
 
 	IloEnv env;
 	IloModel model(env);

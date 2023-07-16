@@ -14,15 +14,15 @@ int main(int argc, char *argv[]){
 	int K = param.get<int>("K", 5);
 	int L = param.get<int>("L", 20);
 
-	Graph graph = Graph(n, size, m, K, L);
+	Model model = Model(n, size, m, K, L);
 
-	Solver solver = Solver(graph);
+	Solver solver = Solver(model);
 
 	bool res = solver.solve();
 
 	if(res) {
 		std::ofstream nodes_file("out/nodes.csv");
-		nodes_file << graph;
+		nodes_file << model;
 
 		std::ofstream routes_file("out/routes.csv");
 		solver.printResult(routes_file);

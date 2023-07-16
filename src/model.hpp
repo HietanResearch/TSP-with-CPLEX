@@ -8,7 +8,7 @@
 #include <random>
 #include <vector>
 
-class Graph {
+class Model {
 	private:
 		const int n;
 		const int map_size;
@@ -18,9 +18,9 @@ class Graph {
 		const int m;
 		const int K;
 		const int L;
-		Graph(int arg_n, int arg_map_size, int m, int K, int L);
+		Model(int arg_n, int arg_map_size, int m, int K, int L);
 		int getN();
 		std::vector<std::vector<float>> getC();
-		void generateGraph();
-		friend std::ofstream& operator<<(std::ofstream& out, const Graph& g);
+		void generateModel();
+		friend std::ofstream& operator<<(std::ofstream& out, const Model& g);
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graph.hpp"
+#include "model.hpp"
 #include "parameter.hpp"
 #include "solver.hpp"
 #include <fstream>

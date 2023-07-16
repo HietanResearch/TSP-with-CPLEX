@@ -31,7 +31,7 @@
 ## Structure
 
 * `main.cpp`
-* `graph.cpp`
+* `model.cpp`
 * `data.cpp`
 * `node.cpp`
 * `solver.cpp`

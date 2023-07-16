@@ -1,19 +1,19 @@
-#include "graph.hpp"
+#include "model.hpp"
 
-Graph::Graph(int arg_n, int arg_map_size, int arg_m, int arg_K, int arg_L) : n{arg_n}, map_size{arg_map_size}, m{arg_m}, K{arg_K}, L{arg_L} {
+Model::Model(int arg_n, int arg_map_size, int arg_m, int arg_K, int arg_L) : n{arg_n}, map_size{arg_map_size}, m{arg_m}, K{arg_K}, L{arg_L} {
 	c = std::vector<std::vector<float>>(n, std::vector<float>(n));
-	generateGraph();
+	generateModel();
 }
 
-int Graph::getN(){
+int Model::getN(){
 	return n;
 }
 
-std::vector<std::vector<float>> Graph::getC(){
+std::vector<std::vector<float>> Model::getC(){
 	return c;
 }
 
-void Graph::generateGraph() {
+void Model::generateModel() {
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_real_distribution<float> dist(0, map_size);
@@ -38,7 +38,7 @@ void Graph::generateGraph() {
 	}
 }
 
-std::ofstream& operator<<(std::ofstream& out, const Graph& g){
+std::ofstream& operator<<(std::ofstream& out, const Model& g){
 	for(const Node& n: g.nodes){
 		out << n.x << ',' << n.y << std::endl;
 	}
