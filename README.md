@@ -26,7 +26,7 @@
 * `execute`: Compile and execute
 * `clean`: delete generated files
 
-## Integer programming formutations
+## Integer programming formulations
 
 $$
 	\large
