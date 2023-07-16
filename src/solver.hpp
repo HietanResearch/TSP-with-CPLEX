@@ -1,6 +1,5 @@
 #pragma once
 
-#include "data.hpp"
 #include "graph.hpp"
 #include <fstream>
 #include <ilcplex/ilocplex.h>
