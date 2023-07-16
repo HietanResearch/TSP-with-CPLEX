@@ -10,11 +10,8 @@ int main(int argc, char *argv[]){
 
 	int n = param.get<int>("n", 30);
 	int size = param.get<int>("size", 100);
-	int m = param.get<int>("m", 2);
-	int K = param.get<int>("K", 5);
-	int L = param.get<int>("L", 20);
 
-	Model model = Model(n, size, m, K, L);
+	Model model = Model(n, size);
 
 	Solver solver = Solver(model);
 

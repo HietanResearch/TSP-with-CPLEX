@@ -15,10 +15,7 @@ class Model {
 		std::vector<Node> nodes;
 		std::vector<std::vector<float>> c;
 	public:
-		const int m;
-		const int K;
-		const int L;
-		Model(int arg_n, int arg_map_size, int m, int K, int L);
+		Model(int arg_n, int arg_map_size);
 		int getN();
 		std::vector<std::vector<float>> getC();
 		void generateModel();

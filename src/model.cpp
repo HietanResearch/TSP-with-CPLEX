@@ -1,6 +1,6 @@
 #include "model.hpp"
 
-Model::Model(int arg_n, int arg_map_size, int arg_m, int arg_K, int arg_L) : n{arg_n}, map_size{arg_map_size}, m{arg_m}, K{arg_K}, L{arg_L} {
+Model::Model(int arg_n, int arg_map_size) : n{arg_n}, map_size{arg_map_size} {
 	c = std::vector<std::vector<float>>(n, std::vector<float>(n));
 	generateModel();
 }
