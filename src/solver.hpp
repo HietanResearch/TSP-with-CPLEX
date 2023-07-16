@@ -12,9 +12,8 @@ ILOSTLBEGIN
 class Solver {
 	public:
 		Graph graph;
-		Data data;
 		std::vector<std::vector<int>> res;
-		Solver(Graph arg_Graph, Data arg_data);
+		Solver(Graph arg_Graph);
 		bool solve();
 		void printResult(std::ofstream& file);
 };

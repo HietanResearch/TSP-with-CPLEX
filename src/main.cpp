@@ -14,10 +14,9 @@ int main(int argc, char *argv[]){
 	int K = param.get<int>("K", 5);
 	int L = param.get<int>("L", 20);
 
-	Graph graph = Graph(n, size);
-	Data data = Data(m, L, K);
+	Graph graph = Graph(n, size, m, K, L);
 
-	Solver solver = Solver(graph, data);
+	Solver solver = Solver(graph);
 
 	bool res = solver.solve();
 

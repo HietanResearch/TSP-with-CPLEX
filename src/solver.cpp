@@ -2,14 +2,14 @@
 
 #define OK(n) std::cout << "OK" << n << std::endl
 
-Solver::Solver(Graph arg_graph, Data arg_data) : graph{arg_graph}, data{arg_data} {}
+Solver::Solver(Graph arg_graph) : graph{arg_graph} {}
 
 bool Solver::solve(){
 	int n = graph.getN();
 	std::vector<std::vector<float>> c = graph.getC();
-	int m = data.m;
-	int L = data.L;
-	int K = data.K;
+	int m = graph.m;
+	int L = graph.L;
+	int K = graph.K;
 
 	IloEnv env;
 	IloModel model(env);
@@ -32,7 +32,7 @@ bool Solver::solve(){
 	u[0] = IloNumVar(env, 0, 0, IloNumVar::Int, "u(0)");
 	for(int i = 1; i < n; i++){
 		name << "u(" << i << ")";
-		u[i] = IloNumVar(env, 1, data.L - 1, IloNumVar::Int, name.str().c_str());
+		u[i] = IloNumVar(env, 1, L - 1, IloNumVar::Int, name.str().c_str());
 		name.str("");
 	}
 

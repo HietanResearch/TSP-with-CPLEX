@@ -15,7 +15,10 @@ class Graph {
 		std::vector<Node> nodes;
 		std::vector<std::vector<float>> c;
 	public:
-		Graph(int arg_n, int arg_map_size);
+		const int m;
+		const int K;
+		const int L;
+		Graph(int arg_n, int arg_map_size, int m, int K, int L);
 		int getN();
 		std::vector<std::vector<float>> getC();
 		void generateGraph();
