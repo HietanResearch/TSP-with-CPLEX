@@ -70,7 +70,7 @@ MAKE_DIRS := $(BINDIR) $(OBJDIR) $(OUTDIR)
 # Set Commands
 all: $(MAKE_DIRS) $(TARGET)
 
-rebuid: clean all
+rebuild: clean all
 
 execute: all run
 
