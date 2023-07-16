@@ -1,8 +1,21 @@
 #include "main.hpp"
 
 int main(int argc, char *argv[]){
-	Graph graph = Graph(30, 100);
-	Data data = Data(4, 15, 5);
+	if(argc < 2) {
+		std::cerr << "ERROR: Input arguments" << std::endl;
+	}
+	std::string filename = argv[1];
+
+	parameter::Parameter param(filename);
+
+	int n = param.get<int>("n", 30);
+	int size = param.get<int>("size", 100);
+	int m = param.get<int>("m", 2);
+	int K = param.get<int>("K", 5);
+	int L = param.get<int>("L", 20);
+
+	Graph graph = Graph(n, size);
+	Data data = Data(m, L, K);
 
 	Solver solver = Solver(graph, data);
 
