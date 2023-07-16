@@ -6,10 +6,13 @@
 PARAMETER := parameter.cfg
 
 # Set Output File
-TIME = $(shell date "+%Y%m%d%H%M%S")
-NODES_CSV = $(OUTDIR)/nodes_$(TIME).csv
-ROUTES_CSV = $(OUTDIR)/routes_$(TIME).csv
-PDF = $(OUTDIR)/graph_$(TIME).pdf
+TIME := $(shell date "+%Y%m%d%H%M%S")
+
+OUTDIR := out
+
+NODES_CSV := $(OUTDIR)/nodes_$(TIME).csv
+ROUTES_CSV := $(OUTDIR)/routes_$(TIME).csv
+PDF := $(OUTDIR)/graph_$(TIME).pdf
 
 # Detect Kernel Name
 KERNEL := $(shell uname -s)
@@ -77,37 +80,49 @@ R_SRC := $(SRCDIR)/makeGraph.R
 OBJDIR := obj
 OBJS := $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.cpp=.o)))
 
-OUTDIR := out
-
 MAKE_DIRS := $(BINDIR) $(OBJDIR) $(OUTDIR)
 
 # Set Commands
+#.SILENT:
+
 all: $(MAKE_DIRS) $(TARGET)
+	echo "Make: Done all"
 
 rebuild: clean all
+	echo "Make: Done rebuild"
 
 execute: all run
+	echo "Make: Done execute"
 
 execute_all: execute graph
+	echo "Make: Done execute_all"
 
 reexecute: clean execute
+	echo "Make: Done reexecute"
 
 run:
 	./$(TARGET) $(PARAMETER) $(NODES_CSV) $(ROUTES_CSV)
+	echo "Make: Done run"
 
 run_all: run graph
+	echo "Make: Done run_all"
 
 clean:
 	rm -rf $(MAKE_DIRS)
+	echo "Make: Done clean"
 
 graph:
 	Rscript $(R_SRC) $(NODES_CSV) $(ROUTES_CSV) $(PDF)
+	echo "Make: Done graph"
 
 $(TARGET): $(OBJS)
 	$(CCC) $(CCFLAGS) $(CCLNDIRS) -o $@ $^ $(CCLNFLAGS)
+	echo "Make: Compiled $^"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CCC) -c $(CCFLAGS) $^ -o $@
+	echo "Make: Linked $^"
 
 $(MAKE_DIRS):
 	$(shell mkdir $@)
+	echo "Make: Make directories $@"
