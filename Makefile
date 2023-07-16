@@ -83,7 +83,7 @@ OBJS := $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.cpp=.o)))
 MAKE_DIRS := $(BINDIR) $(OBJDIR) $(OUTDIR)
 
 # Set Commands
-#.SILENT:
+.SILENT:
 
 all: $(MAKE_DIRS) $(TARGET)
 	echo "Make: Done all"
