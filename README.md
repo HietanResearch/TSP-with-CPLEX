@@ -30,6 +30,8 @@ This program aims to solve the Traveling Salesman Problem ( TSP ), which is one 
 	* `make all`
 * Run the executable and make graph.
 	* `make run_all`
+* Confirm the results.
+	* `open out/graph_**************.pdf`
 
 ## Makefile
 
