@@ -19,16 +19,16 @@ This program aims to solve the Traveling Salesman Problem ( TSP ), which is one 
 * Clang ( when using Max OS X )
 * R
 
-## Compile and Run
+## Usage
 
-* Get the code from GitHub
+* Get the code from GitHub.
 	* `git clone https://github.com/HietanResearch/TSP-with-CPLEX.git`
 	* `git clone git@github.com:HietanResearch/TSP-with-CPLEX.git`
-* Move to directory
+* Move to directory.
 	* `cd TSP-with-CPLEX`
-* Run make
+* Compile C++ source files.
 	* `make all`
-* Run the executable and make graph
+* Run the executable and make graph.
 	* `make run_all`
 
 ## Makefile
