@@ -24,7 +24,7 @@ This program aims to solve the Traveling Salesman Problem (TSP), which is one of
 * Get the code from GitHub.
 	* `git clone https://github.com/HietanResearch/TSP-with-CPLEX.git`
 	* `git clone git@github.com:HietanResearch/TSP-with-CPLEX.git`
-* Move to directory.
+* Move directory.
 	* `cd TSP-with-CPLEX`
 * Compile C++ source files.
 	* `make all`
