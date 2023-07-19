@@ -1,8 +1,10 @@
 # Traveling Salesman Problem with CPLEX
 
+This program aims to solve the Traveling Salesman Problem (TSP), which is one of the combinatorial optimization problems, using the mathematical programming solver [IBM® CPLEX® Optimizer](https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer).
+
 ## Prequisites
 
-* IBM® CPLEX® Optimizer
+* [IBM® CPLEX® Optimizer](https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer)
 * C++20
 * GCC (when using Linux)
 * clang (when using Max OS X)
