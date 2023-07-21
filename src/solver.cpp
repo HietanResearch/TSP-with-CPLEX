@@ -136,9 +136,9 @@ bool Solver::solve(){
 
 void Solver::printResult(std::ofstream& file){
 	for(vector<int> r : res){
-		for(int i = 0; i < r.size(); i++){
+		for(int i = 0; i < (int)r.size(); i++){
 			file << r.at(i);
-			if(i < r.size() - 1) file << ", ";
+			if(i < (int)r.size() - 1) file << ", ";
 		}
 		file << std::endl;
 	}
