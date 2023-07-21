@@ -18,12 +18,12 @@ void Model::generateModel() {
 	std::mt19937 mt(rd());
 	std::uniform_real_distribution<float> dist(0, map_size);
 
-	nodes = std::vector<Node>(n);
+	nodes = std::vector<node::Node>(n);
 
 	for(int i = 0; i < n; i++){
 		int x = dist(mt);
 		int y = dist(mt);
-		nodes.at(i) = Node(x, y, i);
+		nodes.at(i) = node::Node(x, y, i);
 	}
 
 	for(int i = 0; i < n; i++){
@@ -39,7 +39,7 @@ void Model::generateModel() {
 }
 
 std::ofstream& operator<<(std::ofstream& out, const Model& g){
-	for(const Node& n: g.nodes){
+	for(const node::Node& n: g.nodes){
 		out << n.x << ',' << n.y << std::endl;
 	}
 	return out;

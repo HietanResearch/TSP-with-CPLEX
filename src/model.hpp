@@ -12,7 +12,7 @@ class Model {
 	private:
 		const int n;
 		const int map_size;
-		std::vector<Node> nodes;
+		std::vector<node::Node> nodes;
 		std::vector<std::vector<float>> c;
 	public:
 		Model(int arg_n, int arg_map_size);
