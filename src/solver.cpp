@@ -191,7 +191,7 @@ namespace solver {
 						result.at(i).at(j) = 0;
 						continue;
 					}
-					result.at(i).at(j) = cplex.getValue(x[i][j]);
+					result.at(i).at(j) = (cplex.getValue(x[i][j]) > 0.5 ? 1 : 0);
 				}
 			}
 		}
@@ -206,7 +206,31 @@ namespace solver {
 		return solved;
 	}
 
+	void Solver::findRoute(const int y, const int ind) {
+		int next;
+		for(int x = 0; x < (int)result.size(); x++) {
+			if(result.at(y).at(x)) {
+				next = x;
+				break;
+			}
+		}
+		result.at(y).at(next) = ind;
+		if(next != 0) findRoute(next, ind);
+	}
+
+	void Solver::setNumber() {
+		int ind = 1;
+		for(int x = 0; x < (int)result.size(); x++) {
+			if(result.at(0).at(x)) {
+				findRoute(x, ind);
+				result.at(0).at(x) = ind;
+				ind++;
+			}
+		}
+	}
+
 	void Solver::printResult(std::ofstream& file) {
+		setNumber();
 		for(vector<int> r : result) {
 			for(int i = 0; i < (int)r.size(); i++) {
 				file << r.at(i);

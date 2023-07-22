@@ -16,6 +16,8 @@ namespace solver {
 		public:
 			Solver(model::Model arg_Model);
 			bool solve();
+			void findRoute(const int y, const int ind);
+			void setNumber();
 			void printResult(std::ofstream& file);
 	};
 }
