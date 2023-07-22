@@ -18,10 +18,11 @@ namespace parameter {
 
 		public:
 			Parameter(const std::string filename);
+			bool contains(const std::string key);
 
 			template <class T>
 				T returnValue(std::string key);
-			
+
 			template <class T>
 				T get(std::string key);
 
@@ -31,6 +32,10 @@ namespace parameter {
 
 	Parameter::Parameter(const std::string filename) {
 		loadFromFile(filename);
+	}
+
+	bool Parameter::contains(const std::string key) {
+		return parameters.contains(key);
 	}
 
 	void Parameter::loadFromFile(const std::string filename) {
