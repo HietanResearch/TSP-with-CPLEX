@@ -3,7 +3,7 @@ nodes_filename <- args[1]
 routes_filename <- args[2]
 output_filename <- args[3]
 
-library(igraph)
+library(igraph, warn.conflicts = FALSE)
 
 nodes <- as.matrix(read.csv(nodes_filename, header=F))
 routes <- read.csv(routes_filename, header=F)
