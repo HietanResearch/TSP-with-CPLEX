@@ -19,9 +19,7 @@ std::vector<std::vector<float>> Model::getC() const {
 void Model::generateRandom() {
 	std::random_device rd;
 	std::mt19937 mt;
-
 	mt.seed(seed ? seed : rd());
-
 	std::uniform_real_distribution<float> dist(0, size);
 
 	nodes = std::vector<node::Node>(n);
