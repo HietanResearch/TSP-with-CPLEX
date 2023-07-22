@@ -9,7 +9,6 @@
 #include <string>
 
 namespace parameter {
-
 	class Parameter {
 		private:
 			std::map<std::string, std::string> parameters;
@@ -70,13 +69,13 @@ namespace parameter {
 	}
 
 	template <class T>
-	T Parameter::get(std::string key) {
-		if(!parameters.contains(key)) {
-			std::cerr << "ERROR: No such key \"" << key << '"' << std::endl;
-			std::abort();
+		T Parameter::get(std::string key) {
+			if(!parameters.contains(key)) {
+				std::cerr << "ERROR: No such key \"" << key << '"' << std::endl;
+				std::abort();
+			}
+			return returnValue<T>(key);
 		}
-		return returnValue<T>(key);
-	}
 
 	template <class T>
 		T Parameter::get(std::string key, T value) {

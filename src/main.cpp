@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]) {
 	if(argc < 4) {
 		std::cerr << "ERROR: Input arguments" << std::endl;
 		std::abort();
@@ -24,9 +24,9 @@ int main(int argc, char *argv[]){
 
 	solver::Solver solver(model);
 
-	bool res = solver.solve();
+	bool solved = solver.solve();
 
-	if(res) {
+	if(solved) {
 		std::ofstream nodes_file(nodes_filename);
 		nodes_file << model;
 

@@ -3,7 +3,7 @@
 namespace solver {
 	Solver::Solver(model::Model arg_my_model) : my_model{arg_my_model} {}
 
-	bool Solver::solve(){
+	bool Solver::solve() {
 		int n = my_model.getN();
 		std::vector<std::vector<float>> c = my_model.getC();
 
@@ -14,9 +14,9 @@ namespace solver {
 
 		// Variables x
 		IloArray<IloNumVarArray> x(env, n);
-		for(int i = 0; i < n; i++){
+		for(int i = 0; i < n; i++) {
 			x[i] = IloNumVarArray(env, n);
-			for(int j = 0; j < n; j++){
+			for(int j = 0; j < n; j++) {
 				name << "x(" << i << ")(" << j << ")";
 				x[i][j] = IloNumVar(env, 0, 1, IloNumVar::Bool, name.str().c_str());
 				name.str("");
@@ -26,7 +26,7 @@ namespace solver {
 		// Variables u
 		IloNumVarArray u(env, n);
 		u[0] = IloNumVar(env, 0, 0, IloNumVar::Int, "u(0)");
-		for(int i = 1; i < n; i++){
+		for(int i = 1; i < n; i++) {
 			name << "u(" << i << ")";
 			u[i] = IloNumVar(env, 1, n - 1, IloNumVar::Int, name.str().c_str());
 			name.str("");
@@ -35,15 +35,13 @@ namespace solver {
 		IloExpr expr(env);
 
 		// Objective Function
-		for(int i = 0; i < n; i++){
-			for(int j = 0; j < n; j++){
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
 				if(i == j) continue;
 				expr += c.at(i).at(j) * x[i][j];
 			}
 		}
-		IloObjective obj(env, expr, IloObjective::Minimize);
-
-		model.add(obj);
+		model.add(IloMinimize(env, expr));
 		expr.clear();
 
 		// Constraints (1)
@@ -75,14 +73,13 @@ namespace solver {
 		}
 
 		model.add(const2);
-		expr.clear();
 
 		// Constraints (3)
 		IloArray<IloRangeArray> const3(env, n);
-		for(int i = 1; i < n; i++){
+		for(int i = 1; i < n; i++) {
 			const3[i] = IloRangeArray(env, n);
 
-			for(int j = 1; j < n; j++){
+			for(int j = 1; j < n; j++) {
 				if(i == j) continue;
 
 				expr += u[i] - u[j] + n * x[i][j];
@@ -106,21 +103,21 @@ namespace solver {
 		try {
 			solved = cplex.solve();
 		}
-		catch(const IloException& error){
+		catch(const IloException& error) {
 			std::cerr << std::endl << "CPLEX Raised an exception" << std::endl;
 			std::cerr << error << std::endl;
 			env.end();
 			throw;
 		}
 
-		if(solved){
+		if(solved) {
 			std::cout << std::endl << "CPLEX Solved!" << std::endl;
 			std::cout << "\tStatus: " << cplex.getStatus() << std::endl;;
 			std::cout << "\tObjective value: " << cplex.getObjValue() << std::endl << std::endl;
 
 			result = std::vector<std::vector<int>>(n, std::vector<int>(n, 0));
-			for(int i = 0; i < n; i++){
-				for(int j = 0; j < n; j++){
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < n; j++) {
 					if(i == j) {
 						result.at(i).at(j) = 0;
 						continue;
@@ -140,9 +137,9 @@ namespace solver {
 		return solved;
 	}
 
-	void Solver::printResult(std::ofstream& file){
-		for(vector<int> r : result){
-			for(int i = 0; i < (int)r.size(); i++){
+	void Solver::printResult(std::ofstream& file) {
+		for(vector<int> r : result) {
+			for(int i = 0; i < (int)r.size(); i++) {
 				file << r.at(i);
 				if(i < (int)r.size() - 1) file << ", ";
 			}
