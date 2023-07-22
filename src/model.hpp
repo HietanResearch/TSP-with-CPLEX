@@ -1,7 +1,6 @@
 #pragma once
 
 #include "node.hpp"
-#include <cfloat>
 #include <cmath>
 #include <fstream>
 #include <iostream>

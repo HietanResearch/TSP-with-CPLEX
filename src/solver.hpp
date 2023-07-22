@@ -1,18 +1,21 @@
 #pragma once
 
 #include "model.hpp"
-#include <fstream>
 #include <ilcplex/ilocplex.h>
+#include <fstream>
 #include <iostream>
 #include <string>
 
 ILOSTLBEGIN
 
-class Solver {
-	public:
-		model::Model mod;
-		std::vector<std::vector<int>> res;
-		Solver(model::Model arg_Model);
-		bool solve();
-		void printResult(std::ofstream& file);
-};
+namespace solver {
+	class Solver {
+		private:
+			model::Model my_model;
+			std::vector<std::vector<int>> result;
+		public:
+			Solver(model::Model arg_Model);
+			bool solve();
+			void printResult(std::ofstream& file);
+	};
+}

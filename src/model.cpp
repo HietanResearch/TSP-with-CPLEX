@@ -33,7 +33,7 @@ namespace model {
 
 		for(int y = 0; y < n; y++) {
 			for(int x = 0; x <= y; x++) {
-				if(y == x) c.at(y).at(x) = FLT_MAX;
+				if(y == x) c.at(y).at(x) = 0;
 				else {
 					float d = distance(nodes.at(y), nodes.at(x));
 					c.at(y).at(x) = d;
