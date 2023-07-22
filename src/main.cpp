@@ -11,10 +11,13 @@ int main(int argc, char *argv[]) {
 
 	parameter::Parameter param(parameter_filename);
 
-	int n = param.get<int>("n", 30);
 	int size = param.get<int>("size", 100);
+	int n = param.get<int>("n", 30);
+	int m = param.get<int>("m", 4);
+	int K = param.get<int>("K", 5);
+	int L = param.get<int>("L", 15);
 
-	model::Model model(n, size);
+	model::Model model(size, n, m, K, L);
 
 	if(param.contains("seed")) {
 		model.setSeed(param.get<int>("seed"));

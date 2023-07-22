@@ -5,6 +5,9 @@ namespace solver {
 
 	bool Solver::solve() {
 		int n = my_model.getN();
+		int m = my_model.getM();
+		int K = my_model.getK();
+		int L = my_model.getL();
 		std::vector<std::vector<float>> c = my_model.getC();
 
 		IloEnv env;
@@ -14,9 +17,9 @@ namespace solver {
 
 		// Variables x
 		IloArray<IloNumVarArray> x(env, n);
-		for(int i = 0; i < n; i++) {
+		for(int i = 0; i < n; i++){
 			x[i] = IloNumVarArray(env, n);
-			for(int j = 0; j < n; j++) {
+			for(int j = 0; j < n; j++){
 				name << "x(" << i << ")(" << j << ")";
 				x[i][j] = IloNumVar(env, 0, 1, IloNumVar::Bool, name.str().c_str());
 				name.str("");
@@ -26,77 +29,143 @@ namespace solver {
 		// Variables u
 		IloNumVarArray u(env, n);
 		u[0] = IloNumVar(env, 0, 0, IloNumVar::Int, "u(0)");
-		for(int i = 1; i < n; i++) {
+		for(int i = 1; i < n; i++){
 			name << "u(" << i << ")";
-			u[i] = IloNumVar(env, 1, n - 1, IloNumVar::Int, name.str().c_str());
+			u[i] = IloNumVar(env, 1, L, IloNumVar::Int, name.str().c_str());
 			name.str("");
 		}
 
 		IloExpr expr(env);
 
-		// Objective Function
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n; j++) {
+		// Objective Function (1)
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < n; j++){
 				if(i == j) continue;
 				expr += c.at(i).at(j) * x[i][j];
 			}
 		}
-		model.add(IloMinimize(env, expr));
+		IloObjective obj(env, expr, IloObjective::Minimize);
+
+		model.add(obj);
 		expr.clear();
 
-		// Constraints (1)
-		IloRangeArray const1(env, n);
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n; j++) {
-				if(i == j) continue;
-				expr += x[i][j];
-			}
-			name << "Constrains(1)(i_" << i << ")";
-			const1[i] = IloRange(env, 1, expr, 1, name.str().c_str());
-			name.str("");
-			expr.clear();
-		}
-
-		model.add(const1);
-
 		// Constraints (2)
-		IloRangeArray const2(env, n);
-		for(int j = 0; j < n; j++) {
-			for(int i = 0; i < n; i++) {
-				if(i == j) continue;
-				expr += x[i][j];
-			}
-			name << "Constrains(2)(j_" << j << ")";
-			const2[j] = IloRange(env, 1, expr, 1, name.str().c_str());
-			name.str("");
-			expr.clear();
+		for(int j = 1; j < n; j++){
+			expr += x[0][j];
 		}
+		IloRange const2(env, m, expr, m, "Constraints(2)");
 
 		model.add(const2);
+		expr.clear();
 
 		// Constraints (3)
-		IloArray<IloRangeArray> const3(env, n);
-		for(int i = 1; i < n; i++) {
-			const3[i] = IloRangeArray(env, n);
+		for(int i = 1; i < n; i++){
+			expr += x[i][0];
+		}
+		IloRange const3(env, m, expr, m, "Constraints(3)");
 
-			for(int j = 1; j < n; j++) {
+		model.add(const3);
+		expr.clear();
+
+		// Constraints (4)
+		IloRangeArray const4(env, n - 1);
+		for(int j = 1; j < n; j++){
+			for(int i = 0; i < n; i++){
+				if(i == j) continue;
+				expr += x[i][j];
+			}
+
+			name << "Constraints(4)(j_" << j << ")";
+			const4[j - 1] = IloRange(env, 1, expr, 1, name.str().c_str());
+			expr.clear();
+			name.str("");
+		}
+
+		model.add(const4);
+
+		// Constraints (5)
+		IloRangeArray const5(env, n - 1);
+		for(int i = 1; i < n; i++){
+			for(int j = 0; j < n; j++){
+				if(i == j) continue;
+				expr += x[i][j];
+			}
+
+			name << "Constraints(5)(i_" << i << ")";
+			const5[i - 1] = IloRange(env, 1, expr, 1, name.str().c_str());
+			expr.clear();
+			name.str("");
+		}
+
+		model.add(const5);
+
+		// Constraints (6)
+		IloRangeArray const6(env, n - 1);
+		for(int i = 1; i < n; i++){
+			expr += u[i] + (L - 2) * x[0][i] - x[i][0];
+
+			name << "Constraints(6)(i_" << i << ")";
+			const6[i - 1] = IloRange(env, -IloInfinity, expr, L - 1, name.str().c_str());
+
+			expr.clear();
+			name.str("");
+		}
+
+		model.add(const6);
+
+		// Constraints (7)
+		IloRangeArray const7(env, n - 1);
+		for(int i = 1; i < n; i++){
+			expr += u[i] + x[0][i] + (2 - K) * x[i][0];
+
+			name << "Constraints(7)(i_" << i << ")";
+			const7[i - 1] = IloRange(env, 2, expr, IloInfinity, name.str().c_str());
+
+			expr.clear();
+			name.str("");
+		}
+
+		model.add(const7);
+
+		// Constraints (8)
+		IloRangeArray const8(env, n - 1);
+		for(int i = 1; i < n; i++){
+			expr += x[0][i] + x[i][0];
+
+			name << "Constraints(8)(i_" << i << ")";
+			const8[i - 1] = IloRange(env, -IloInfinity, expr, 1, name.str().c_str());
+
+			expr.clear();
+			name.str("");
+		}
+
+		model.add(const8);
+
+		// Constraints (9)
+		IloArray<IloRangeArray> const9(env, n);
+		for(int i = 1; i < n; i++){
+			const9[i] = IloRangeArray(env, n);
+
+			for(int j = 1; j < n; j++){
 				if(i == j) continue;
 
-				expr += u[i] - u[j] + n * x[i][j];
+				expr += u[i] - u[j] + L * x[i][j] + (L - 2) * x[j][i];
 
-				name << "Constraints(4)(i_" << i << ",j_" << j << ")";
-				const3[i][j] = IloRange(env, -IloInfinity, expr, n - 1, name.str().c_str());
+				name << "Constraints(9)(i_" << i << ",j_" << j << ")";
+				const9[i][j] = IloRange(env, -IloInfinity, expr, L - 1, name.str().c_str());
 
 				expr.clear();
 				name.str("");
 			}
-			model.add(const3[i]);
+			model.add(const9[i]);
 		}
 
 		expr.end();
-		
+
 		// Solve
 		IloCplex cplex(model);
+
+		cplex.exportModel("out/model.lp");
 
 		bool solved = false;
 

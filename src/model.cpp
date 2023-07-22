@@ -1,12 +1,24 @@
 #include "model.hpp"
 
 namespace model {
-	Model::Model(int arg_n, int arg_size) : n{arg_n}, size{arg_size} {
+	Model::Model(int arg_size, int arg_n, int arg_m, int arg_K, int arg_L) : size{arg_size}, n{arg_n}, m{arg_m}, K{arg_K}, L{arg_L} {
 		c = std::vector<std::vector<float>>(n, std::vector<float>(n));
 	}
 
 	int Model::getN() const {
 		return n;
+	}
+
+	int Model::getM() const {
+		return m;
+	}
+
+	int Model::getK() const {
+		return K;
+	}
+
+	int Model::getL() const {
+		return L;
 	}
 
 	void Model::setSeed(int num) {
