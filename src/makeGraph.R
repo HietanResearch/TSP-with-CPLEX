@@ -27,11 +27,11 @@ pdf(output_filename)
 plot(g,
 	 layout=nodes,
 	 vertex.shape=shape_arg,
-	 vertex.color="#E4E9D1",
-	 vertex.size=10,
-	 vertex.label.color="#333333",
+	 vertex.color="#333333",
+	 vertex.size=5,
+	 vertex.label=NA,
 	 edge.color="#333333",
-	 edge.width=0.5,
-	 edge.arrow.size=0.4
+	 edge.width=1,
+	 edge.arrow.size=0.5
 )
 box()
