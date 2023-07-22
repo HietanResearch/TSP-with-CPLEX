@@ -10,9 +10,9 @@ ILOSTLBEGIN
 
 class Solver {
 	public:
-		Model mod;
+		model::Model mod;
 		std::vector<std::vector<int>> res;
-		Solver(Model arg_Model);
+		Solver(model::Model arg_Model);
 		bool solve();
 		void printResult(std::ofstream& file);
 };

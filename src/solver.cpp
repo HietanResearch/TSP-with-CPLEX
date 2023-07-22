@@ -1,6 +1,6 @@
 #include "solver.hpp"
 
-Solver::Solver(Model arg_mod) : mod{arg_mod} {}
+Solver::Solver(model::Model arg_mod) : mod{arg_mod} {}
 
 bool Solver::solve(){
 	int n = mod.getN();

@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 	int n = param.get<int>("n", 30);
 	int size = param.get<int>("size", 100);
 
-	Model model = Model(n, size);
+	model::Model model = model::Model(n, size);
 
 	if(param.contains("seed")) {
 		model.setSeed(param.get<int>("seed"));
