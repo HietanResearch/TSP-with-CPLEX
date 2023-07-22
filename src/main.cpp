@@ -16,6 +16,12 @@ int main(int argc, char *argv[]){
 
 	Model model = Model(n, size);
 
+	if(param.contains("seed")) {
+		model.setSeed(param.get<int>("seed"));
+	}
+
+	model.generateRandom();
+
 	Solver solver = Solver(model);
 
 	bool res = solver.solve();
