@@ -38,9 +38,7 @@ void Model::generateModel() {
 	}
 }
 
-std::ofstream& operator<<(std::ofstream& out, const Model& g){
-	for(const node::Node& n: g.nodes){
-		out << n.x << ',' << n.y << std::endl;
-	}
+std::ofstream& operator << (std::ofstream& out, const Model& g){
+	for(const node::Node& n: g.nodes) out << n;
 	return out;
 }

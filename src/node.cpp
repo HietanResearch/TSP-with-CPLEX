@@ -5,15 +5,32 @@ namespace node {
 	Node::Node(int arg_x, int arg_y) : x{arg_x}, y{arg_y} {};
 	Node::Node(int arg_x, int arg_y, int arg_id) : x{arg_x}, y{arg_y}, id{arg_id} {};
 
-	float abs(Node n) {
-		return std::sqrt(std::pow(n.x, 2) + std::pow(n.y, 2));
+	int Node::getX() const {
+		return this->x;
 	}
 
-	float distance(Node n1, Node n2) {
-		return abs(n1 - n2);
+	int Node::getY() const {
+		return this->y;
 	}
 
-	Node Node::operator - (Node node) {
-		return Node(this->x - node.x, this->y - node.y);
+	int Node::getId() const {
+		return this->id;
+	}
+
+	float Node::abs() const {
+		return std::sqrt(std::pow(this->x, 2) + std::pow(this->y, 2));
+	}
+
+	float distance(const Node& node1, const Node& node2) {
+		return (node1 - node2).abs();
+	}
+
+	Node Node::operator - (const Node& node) const {
+		return Node(this->x - node.getX(), this->y - node.getY());
+	}
+
+	std::ofstream& operator << (std::ofstream& out, const Node& node) {
+		out << node.getX() << ", " << node.getY() << std::endl;
+		return out;
 	}
 }
